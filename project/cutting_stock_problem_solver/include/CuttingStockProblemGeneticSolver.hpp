@@ -1,6 +1,20 @@
 #pragma once
 
-class CuttingStockProblemGeneticSolver
+GABoolean GATerminateUponGenerationOrTime(GAGeneticAlgorithm& geneticAlgorithm){
+    static auto algorithmStart = std::chrono::steady_clock::now();
+    if (geneticAlgorithm.generation() >= geneticAlgorithm.nGenerations()) return gaTrue;
+    if (geneticAlgorithm.generation() % 100 == 0) {
+        auto algorithmCheckpoint = std::chrono::steady_clock::now();
+        std::chrono::duration<double> timeDifference = algorithmCheckpoint - algorithmStart;
+        if (timeDifference.count() > 300) {
+            return gaTrue;
+        }
+    }
+    return gaFalse;
+}
+
+
+class CuttingStockProblemGeneticSolver final 
 {
 public:
 
@@ -22,23 +36,13 @@ public:
         geneticAlgorithm.populationSize(populationSize);
         geneticAlgorithm.nGenerations(numberOfGenerations);
         geneticAlgorithm.pMutation(mutationProbability);
+        geneticAlgorithm.pCrossover(crossoverProbability);
         geneticAlgorithm.selector(GARouletteWheelSelector(GASelectionScheme::RAW));
         geneticAlgorithm.scaling(GANoScaling());
-
-        // Genetic algorithm output configuration
-        // geneticAlgorithm.scoreFilename("zbieznosc.dat");
-        // geneticAlgorithm.scoreFrequency(10);
-        // geneticAlgorithm.flushFrequency(50);
+        geneticAlgorithm.terminator(GATerminateUponGenerationOrTime);
 
         // Evolution
-        // TODO: add better random number generator
-        int stepNumber = 0;
-        geneticAlgorithm.initialize(static_cast<unsigned>(time(0)));
-        while (!geneticAlgorithm.done()) {
-            geneticAlgorithm.step();
-            std::cout << stepNumber++ << std::endl;
-        }
-        // geneticAlgorithm.evolve(static_cast<unsigned>(time(0)));
+        geneticAlgorithm.evolve(static_cast<unsigned>(time(0)));
 
         // Data about best genome extraction
         CompositeGenome bestGenome(numberOfFiguresToCut, objectiveFunction);

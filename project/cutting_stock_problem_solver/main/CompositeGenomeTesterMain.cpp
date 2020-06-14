@@ -1,6 +1,6 @@
 #include "CompositeGenome.hpp"
 #include "InputDataReader.hpp"
-#include "Pieces.hpp"
+#include "FigureDimentionsGlobalStorage.hpp"
 #include "ObjectiveFunction.hpp"
 
 #include <iostream>
@@ -10,12 +10,11 @@ int main() {
 
     // Read figures data from file
     // TODO: replace with some mock-type stuff
-    InputDataReader inputDataReader;
-    auto pieceSizes = inputDataReader.fromFile("maleplyty.txt");
-    Pieces::getInstance(pieceSizes);
+    auto figuresDimentions = InputDataReader().fromFile("maleplyty.txt");
+    FigureDimentionsGlobalStorage::instance(figuresDimentions);
 
     // Test genome creation
-    CompositeGenome genome(pieceSizes.size(), objectiveFunction);
+    CompositeGenome genome(figuresDimentions.size(), objectiveFunction);
     std::cout << "Genome after creation: \n" << genome << std::endl << std::endl;
 
     // Test genome initialization

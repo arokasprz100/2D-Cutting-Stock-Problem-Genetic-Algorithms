@@ -17,6 +17,6 @@ double randomUniformRealNumber() {
 double randomNormalRealNumber() {
     static thread_local std::random_device rd;
     static thread_local std::mt19937 generator(rd());
-    std::normal_distribution<> distribution(0, 100);
+    std::normal_distribution<> distribution(0, 50);
     return distribution(generator);
 }

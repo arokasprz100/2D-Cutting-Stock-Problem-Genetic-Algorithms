@@ -5,12 +5,18 @@
 
 float objectiveFunction(GAGenome& genome) {
 
-    float maxArea = AlgorithmSettings::xPositionUpperBound * AlgorithmSettings::yPositionUpperBound;
-
     CompositeGenome& compositeGenome = dynamic_cast<CompositeGenome&>(genome);
-    Pieces pieces = Pieces::getInstance();
+    FigureDimentionsGlobalStorage figures = FigureDimentionsGlobalStorage::instance();
 
-    return static_cast<float>( ResultValidator::checkIfContainsOverlappingFigures(compositeGenome, pieces) 
-        || ResultValidator::checkIfContainsFiguresOutsideSheet(compositeGenome, pieces) 
-        ? 0 : FiguresAreaCalculator::calculate(compositeGenome, pieces) ) / maxArea;
+    // we return 0 if there are any overlapping figures
+    if (ResultValidator::checkIfContainsOverlappingFigures(compositeGenome, figures)) {
+        return 0;
+    }
+
+    // we return 0 if there are any figures outside sheet
+    if (ResultValidator::checkIfContainsFiguresOutsideSheet(compositeGenome, figures)) {
+        return 0;
+    }
+
+    return static_cast<float>(FiguresAreaCalculator::calculate(compositeGenome, figures)) / static_cast<float>(Sheet::area());
 }

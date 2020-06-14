@@ -1,20 +1,20 @@
 #pragma once
 
-#include "Piece.hpp"
+#include "Figure.hpp"
 
 class FiguresAreaCalculator final
 {
 public:
 
-    static int calculate(const CompositeGenome& genome, const Pieces& pieces) {
+    static int calculate(const CompositeGenome& genome, const FigureDimentionsGlobalStorage& figures) {
 
         int totalArea = 0;
-        for (int i = 0; i < pieces.getNumberOfPieces(); ++i) {
-            auto currentPieceSize = pieces.getPieceSize(i);
-            auto currentPieceGenomeProperties = genome.getByIndex(i);
-            Piece currentPiece (currentPieceSize, currentPieceGenomeProperties);
+        for (int i = 0; i < figures.getNumberOfFigures(); ++i) {
+            auto currentFigureSize = figures.getFigureSize(i);
+            auto currentFigureGenomeProperties = genome.getByIndex(i);
+            Figure currentFigure (currentFigureSize, currentFigureGenomeProperties);
 
-            totalArea += (currentPiece.isUsed() ? currentPiece.area() : 0);
+            totalArea += (currentFigure.isUsed() ? currentFigure.area() : 0);
         }
         return totalArea;
     }

@@ -1,14 +1,12 @@
 #pragma once
 
-#include "Pieces.hpp"
+class CompositeGenome; // forward declaration
 
-class CompositeGenome;
 
 class SolutionCleaner
 {
 public:
-
     static void moveAllFiguresTowardsTheOrigin(CompositeGenome& compositeGenome);
-
-    static void tryToAddRemainingFigures(CompositeGenome& compositeGenome, const Pieces& pieces);
+    static void tryToAddRemainingFigures(CompositeGenome& compositeGenome);
+    static void removeFiguresThatBreakTheSolution(CompositeGenome& compositeGenome);
 };

@@ -20,7 +20,7 @@ int main() {
     auto algorithmStartTime =  std::chrono::steady_clock::now();
 
     std::cout << "Running genetic algorithm. This may take a while ... " << std::endl << std::endl;
-    CuttingStockProblemGeneticSolver cuttingStockProblemGeneticSolver(0.05, 0.8, 1000, 1000);
+    CuttingStockProblemGeneticSolver cuttingStockProblemGeneticSolver(0.05, 0.75, 1000, 1000);
     CompositeGenome bestGenome = cuttingStockProblemGeneticSolver.run(figuresDimentions.size(), objectiveFunction);
     std::cout << "Best solution returned from genetic algorithm: \n" << bestGenome << std::endl;
 

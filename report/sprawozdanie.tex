@@ -94,7 +94,7 @@
 \cfoot{\thepage}
 
 \section{Wstęp}
-Wykonywany w ramach przedmiotu \textit{Algorytmy genetyczne} projekt zakładał stworzenie programu optymalizującego ułożenie zadanego zbioru prostokątnych płyt na obszarze o zadanym rozmiarze tak, by pozostało jak najmniej niezagospodarowanego miejsca. Do dyspozycji była zatem prostokątna płyta o wymiarach $2800 \times 2070~\si{mm^2}$ oraz zestaw maksymalnie 40 płyt do wycięcia z niej. Dozwolone były wyłącznie cięcia pionowe i poziomie, małe płyty nie mogły na siebie nachodzić lub wystawać poza dużą płytę. Przygotowane przeze mnie rozwiązanie oparte zostało o algorytm genetyczny wspomagany przez inne, pomniejsze algorytmy.
+Wykonywany w ramach przedmiotu \textit{Algorytmy genetyczne} projekt zakładał stworzenie programu optymalizującego ułożenie zadanego zbioru prostokątnych płyt na obszarze o zadanym rozmiarze tak, by pozostało jak najmniej niezagospodarowanego miejsca. Do dyspozycji była zatem prostokątna płyta o wymiarach $2800 \times 2070~\si{mm}$ oraz zestaw maksymalnie 40 płyt do wycięcia z niej. Dozwolone były wyłącznie cięcia pionowe i poziomie, małe płyty nie mogły na siebie nachodzić lub wystawać poza dużą płytę. Przygotowane przeze mnie rozwiązanie oparte zostało o algorytm genetyczny wspomagany przez inne, pomniejsze algorytmy.
 
 \section{Opis implementacji}
 Program napisany został w języku C++ (z wykorzystaniem funkcjonalności standardu C++11 oraz C++14). Do jego implementacji wykorzystana została biblioteka GALib, w tym m.in. udostępniana przez nią możliwość tworzenia własnych typów stanowiących genomy. Ponadto przygotowane przez algorytm rozwiązanie może zostać ,,poprawione'' przez algorytm deterministyczny. W niniejszej części sprawozdania opisane zostaną kolejno elementy takie jak: przebieg działania programu, rodzaj zastosowanego algorytmu genetycznego czy zastosowane operatory: mutacji, selekcji i krzyżowania. Należy tutaj zwrócić uwagę, że bardzo często operatory oraz parametry algorytmu dobierane były metodą prób i błędów. Ze względu na ograniczoną objętość niniejszego sprawozdania opis tych badań został w wielu przypadkach pominięty.
@@ -122,7 +122,7 @@ W programie zastosowany został stworzony przeze mnie na potrzeby algorytmu rodz
 
 
 \subsection{Zastosowany algorytm i jego parametry}
-W programie zastosowany został algorytm typu \lstinline{GASteadyStateGA} z domyślną wartością parametru określającego ilość zastępowanych w każdym pokoleniu osobników. Algorytm ten w każdym pokoleniu tworzy populację składającą się z nowych osobników oraz osobników z poprzedniego pokolenia a następnie usuwa najgorsze osobniki tak, by populacja zachowała stały rozmiar. Zastosowanie tego algorytmu miało w przypadku mojego rozwiązania znaczny, pozytywny wpływ na uzyskane wyniki (względem domyślnego algorytmu \lstinline{GASimpleGA}). Ponadto metodą prób i błędów dobrane zostały następujące parametry: liczba pokoleń - 1000, wielkość populacji - 1000 osobników, prawdopodobieństwo mutacji - 0.05 (przy czym proces mutacji opisany poniżej uwzględnia nie tylko ten parametr) oraz prawdopodobieństwo krzyżowania - 0.8. Jakość działania algorytmu jest niestety w dużym stopniu zależna od wartości tych parametrów. W algorytmie zastosowany został dodatkowo niestandardowy mechanizm zakończenia algorytmu - kończy się on, jeśli udało się dotrzeć do ostatniego pokolenia lub jeśli minęło więcej niż 5 minut.
+W programie zastosowany został algorytm typu \lstinline{GASteadyStateGA} z domyślną wartością parametru określającego ilość zastępowanych w każdym pokoleniu osobników. Algorytm ten w każdym pokoleniu tworzy populację składającą się z nowych osobników oraz osobników z poprzedniego pokolenia a następnie usuwa najgorsze osobniki tak, by populacja zachowała stały rozmiar. Zastosowanie tego algorytmu miało w przypadku mojego rozwiązania znaczny, pozytywny wpływ na uzyskane wyniki (względem domyślnego algorytmu \lstinline{GASimpleGA}). Ponadto metodą prób i błędów dobrane zostały następujące parametry: liczba pokoleń - 1000, wielkość populacji - 1000 osobników, prawdopodobieństwo mutacji - 0.05 (przy czym proces mutacji opisany poniżej uwzględnia nie tylko ten parametr) oraz prawdopodobieństwo krzyżowania - 0.75. Jakość działania algorytmu jest niestety w dużym stopniu zależna od wartości tych parametrów. W algorytmie zastosowany został dodatkowo niestandardowy mechanizm zakończenia algorytmu - kończy się on, jeśli udało się dotrzeć do ostatniego pokolenia lub jeśli minęło więcej niż 5 minut.
 
 
 \subsection{Funkcja celu}
@@ -157,28 +157,28 @@ Najważniejszym elementem przygotowanego rozwiązania stanowi rozbudowany operat
 W programie zastosowana została metoda selekcji ruletkowej. Odrzucone zostały: selekcja rankingowa (z powodu gorszych wyników oraz znacznego obniżenia wydajności) oraz turniejowa (z powodu gorszych wyników). Pozostałe metody nie były testowane. W algorytmie wyłączone zostało skalowanie. Zastosowany operator krzyżowania to krzyżowanie jednopunktowe - wykorzystana została tutaj po prostu procedura dostarczona przez bibliotekę GALib dla genomów typu \lstinline{GA1DArrayAlleleGenome<int>}. Nie były testowane inne operatory krzyżowania.
 
 \section{Testy}
-Przygotowane rozwiązanie poddane zostało przeze mnie testom - w tym celu wykorzystane zostały różne zbiory danych. Poniżej zamieszczam wyniki (w formie graficznej) kilku przykładowych testów.
+Przygotowane rozwiązanie poddane zostało przeze mnie testom - w tym celu wykorzystane zostały różne zbiory danych. Poniżej zamieszczam wyniki (w formie graficznej) dwóch przykładowych testów.
 
 \begin{figure}[H]
 \begin{subfigure}{.49\textwidth}
     \centering
     \includegraphics[width=.95\linewidth]{res/result1.pdf}
-    \caption{}
+    \caption{Konfiguracja podstawowa}
 \end{subfigure}
 \hfill
 \begin{subfigure}{.49\textwidth}
     \centering
     \includegraphics[width=.95\linewidth]{res/result2.pdf}
-    \caption{}
+    \caption{Konfiguracja sześciu płyt o rozmiarach $1000 \times 2070~\si{mm}$.}
 \end{subfigure}
-\caption{}
+\caption{Wyniki przykładowych testów}
 \label{fig:fig3}
 \end{figure}
 
-Przetestowana została również odporność programu na sytuacje skrajne, takie jak: podanie dużej liczby płyt (sprawdzenie czasu zatrzymania) czy podanie takiego zestawu płyt, z których żadna nie mieści się na dużej płycie (sprawdzenie, czy program wybierze rozwiązanie poprawne, polegające na odrzuceniu każdej z płyt).
+Przetestowana została również odporność programu na sytuacje skrajne, takie jak: podanie dużej liczby płyt (sprawdzenie czasu zatrzymania) czy podanie takiego zestawu płyt, z których żadna nie mieści się na dużej płycie (sprawdzenie, czy program wybierze rozwiązanie poprawne, polegające na odrzuceniu każdej z płyt). Dla konfiguracji podstawowej (plik dostarczony wraz z treścią zadania) wynik zwykle nie jest niższy od $5000000~\si{mm^2}$.
 
 \section{Podsumowanie}
-
+W ramach projektu stworzony został program realizujący postawione założenia. Przygotowany algorytm mógłby prawdopodobnie zostać jeszcze dopracowany (np. poprzez dobór parametrów takich jak wielkość populacji) oraz zoptymalizowany. Planowane było rozwiązanie wielowątkowe, napotkane zostały jednak problemy natury technicznej (związane z biblioteką GALib). Sposób kodowania prawdopodobnie mógłby zostać uproszczony (z uwagi na fakt, że premiowane są wyrównane rozwiązania). Pomimo to algorytm produkuje rozwiązania do zadowalającej jakości.
 
 
 

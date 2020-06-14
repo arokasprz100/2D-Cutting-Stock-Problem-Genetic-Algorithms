@@ -1,10 +1,10 @@
 #pragma once
 
 GABoolean GATerminateUponGenerationOrTime(GAGeneticAlgorithm& geneticAlgorithm){
-    static auto algorithmStart = std::chrono::steady_clock::now();
+    static auto algorithmStart = std::chrono::high_resolution_clock::now();
     if (geneticAlgorithm.generation() >= geneticAlgorithm.nGenerations()) return gaTrue;
-    if (geneticAlgorithm.generation() % 100 == 0) {
-        auto algorithmCheckpoint = std::chrono::steady_clock::now();
+    if (geneticAlgorithm.generation() % 150 == 0) {
+        auto algorithmCheckpoint = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> timeDifference = algorithmCheckpoint - algorithmStart;
         if (timeDifference.count() > 300) {
             return gaTrue;
